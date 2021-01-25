@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_25_131141) do
+ActiveRecord::Schema.define(version: 2021_01_25_161653) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,10 +26,11 @@ ActiveRecord::Schema.define(version: 2021_01_25_131141) do
   end
 
   create_table "thermostats", force: :cascade do |t|
-    t.string "household_token"
+    t.string "household_token", null: false
     t.string "location"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["household_token"], name: "index_thermostats_on_household_token", unique: true
   end
 
 end
