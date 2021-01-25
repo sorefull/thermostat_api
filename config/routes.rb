@@ -1,3 +1,9 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  namespace :api do
+    resources :readings, only: %i(create show) do
+      member do
+        get :stats
+      end
+    end
+  end
 end
