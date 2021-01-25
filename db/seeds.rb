@@ -1,7 +1,16 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+return unless Rails.env.development?
+
+Thermostat.delete_all
+Reading.delete_all
+
+thermostat = Thermostat.create(
+  household_token: 'dummy_token',
+  location: 'this is a test thermostat'
+)
+
+thermostat.readings.create(
+  number: '1-123',
+  temperature: 25.3,
+  humidity: 60.6,
+  battery_charge: 30.0
+)
