@@ -4,8 +4,12 @@ class ApiController < ActionController::API
   private
 
   def authenticate_thermostat!
-    @thermostat = Thermostat.find_by_household_token(params[:household_token])
+    outcome = Thermostats::Authenticate.run(authenticate_params)
 
-    render json: {}, status: 401 unless @thermostat
+    render json: {}, status: 401 unless outcome.success?
+  end
+
+  def authenticate_params
+    params.permit(:household_token)
   end
 end
