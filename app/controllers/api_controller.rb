@@ -6,7 +6,7 @@ class ApiController < ActionController::API
   def authenticate_thermostat!
     outcome = Thermostats::Authenticate.run(authenticate_params)
 
-    render json: {}, status: 401 unless outcome.success?
+    render json: {}, status: 401 unless outcome.result
   end
 
   def authenticate_params

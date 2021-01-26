@@ -32,7 +32,8 @@ services:
       - .:/code
     depends_on:
       - db
-      - redis
+    environment:
+      - RAILS_ENV=test
   sidekiq:
     depends_on:
       - 'db'

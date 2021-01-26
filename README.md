@@ -43,7 +43,7 @@ curl -XGET 'http://127.0.0.1:3000/api/readings/xxx?household_token=dummy_token'
 
 ```bash
 # Fetching stats
-curl -XGET 'http://127.0.0.1:3000/api/readings/1/stats?household_token=dummy_token'
+curl -XGET 'http://127.0.0.1:3000/api/readings/stats?household_token=dummy_token'
 # Response example {"avg_temperature":28.9,"min_temperature":25.3,"max_temperature":30.1,"avg_humidity":32.65,"min_humidity":30.0,"max_humidity":40.6,"avg_battery_charge":37.5,"min_battery_charge":30.0,"max_battery_charge":40.0}
 ```
 

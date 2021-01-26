@@ -34,12 +34,12 @@ module Readings
     end
 
     def set_min_max_stats
-      $redis.set("#{household_token}.temperature_min", temperature) if $redis.get("#{household_token}.temperature_min").to_f > temperature
-      $redis.set("#{household_token}.temperature_max", temperature) if $redis.get("#{household_token}.temperature_max").to_f < temperature
-      $redis.set("#{household_token}.humidity_min", humidity) if $redis.get("#{household_token}.humidity_min").to_f > humidity
-      $redis.set("#{household_token}.humidity_max", humidity) if $redis.get("#{household_token}.humidity_max").to_f < humidity
-      $redis.set("#{household_token}.battery_charge_min", battery_charge) if $redis.get("#{household_token}.battery_charge_min").to_f > battery_charge
-      $redis.set("#{household_token}.battery_charge_max", battery_charge) if $redis.get("#{household_token}.battery_charge_max").to_f < battery_charge
+      $redis.set("#{household_token}.temperature_min", temperature) if $redis.get("#{household_token}.temperature_min").nil? || $redis.get("#{household_token}.temperature_min").to_f > temperature
+      $redis.set("#{household_token}.temperature_max", temperature) if $redis.get("#{household_token}.temperature_max").nil? || $redis.get("#{household_token}.temperature_max").to_f < temperature
+      $redis.set("#{household_token}.humidity_min", humidity) if $redis.get("#{household_token}.humidity_min").nil? || $redis.get("#{household_token}.humidity_min").to_f > humidity
+      $redis.set("#{household_token}.humidity_max", humidity) if $redis.get("#{household_token}.humidity_max").nil? || $redis.get("#{household_token}.humidity_max").to_f < humidity
+      $redis.set("#{household_token}.battery_charge_min", battery_charge) if $redis.get("#{household_token}.battery_charge_min").nil? || $redis.get("#{household_token}.battery_charge_min").to_f > battery_charge
+      $redis.set("#{household_token}.battery_charge_max", battery_charge) if $redis.get("#{household_token}.battery_charge_max").nil? || $redis.get("#{household_token}.battery_charge_max").to_f < battery_charge
     end
 
     def set_sequence_number

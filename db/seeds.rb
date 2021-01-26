@@ -2,6 +2,7 @@ return unless Rails.env.development?
 
 Thermostat.delete_all
 Reading.delete_all
+$redis.set('dummy_token.count', 0)
 
 thermostat = Thermostat.create(
   household_token: 'dummy_token',
