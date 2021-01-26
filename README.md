@@ -1,24 +1,48 @@
-# README
+# Thermostat API
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is a code challenge.
 
-Things you may want to cover:
+The `Thermostat API` application is api only rails application that is used for saving and providing information collected from IoT thermostats.
 
-* Ruby version
+### Configuration
 
-* System dependencies
+This application is dockerised, it means that to run it you will only need to have [docker](https://www.docker.com/) and to run `docker-compose up` in the application folder.
 
-* Configuration
+This will start several applications inside of your docker:
+- `web` - rails api application
+- `redis` - an instance to store all redis related data
+- `sidekicq` - runs a worker and an interface
+- `postgress` - a database instance
 
-* Database creation
+### Usage
 
-* Database initialization
+The `Thermostat API` application provides 3 endpoints.
 
-* How to run the test suite
+To use `Thermostat API` you will need to:
+- create a database - `docker-compose run web rails db:setup`
+- to seed it with some default data - `docker-compose run web rails db:seed`
+- start the application - `docker-compose up`
 
-* Services (job queues, cache servers, search engines, etc.)
+```bash
+# Saving a reading
+curl -d '{"temperature":"30.1", "humidity":"30.0", "battery_charge":"40.0"}' -H "Content-Type: application/json" -X POST 'http://127.0.0.1:3000/api/readings?household_token=dummy_token'
+# Response example: {"number":"2"}
+```
 
-* Deployment instructions
+```bash
+# Successful fetching a reading
+curl -XGET 'http://127.0.0.1:3000/api/readings/1?household_token=dummy_token'
+# Response example: {"temperature":30.1,"humidity":30.0,"battery_charge":40.0}
+```
 
-* ...
+```bash
+# Unsuccessful fetching a reading
+curl -XGET 'http://127.0.0.1:3000/api/readings/xxx?household_token=dummy_token'
+# Will return you an error: {"reading":"not found"}
+```
+
+```bash
+# Fetching stats
+curl -XGET 'http://127.0.0.1:3000/api/readings/1/stats?household_token=dummy_token'
+# Response example {"avg_temperature":28.9,"min_temperature":25.3,"max_temperature":30.1,"avg_humidity":32.65,"min_humidity":30.0,"max_humidity":40.6,"avg_battery_charge":37.5,"min_battery_charge":30.0,"max_battery_charge":40.0}
+```
