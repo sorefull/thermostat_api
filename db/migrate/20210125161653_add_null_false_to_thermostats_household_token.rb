@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddNullFalseToThermostatsHouseholdToken < ActiveRecord::Migration[5.2]
   def up
     change_column :thermostats, :household_token, :string, null: false

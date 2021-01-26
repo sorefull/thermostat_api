@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SaveReadingJob < ApplicationJob
   queue_as :default
 

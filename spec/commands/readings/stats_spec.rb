@@ -1,26 +1,27 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Readings::Stats do
   subject { described_class.run(params) }
 
-
   let(:params) { { household_token: household_token } }
   let(:household_token) { 'test-token' }
 
   before do
-    allow($redis).to receive(:get).with("#{household_token}.count") { temperature_records.count }
+    allow(Rails.configuration.redis).to receive(:get).with("#{household_token}.count") { temperature_records.count }
 
-    allow($redis).to receive(:get).with("#{household_token}.temperature_sum") { temperature_records.sum.to_s }
-    allow($redis).to receive(:get).with("#{household_token}.temperature_min") { temperature_records.min.to_s }
-    allow($redis).to receive(:get).with("#{household_token}.temperature_max") { temperature_records.max.to_s }
+    allow(Rails.configuration.redis).to receive(:get).with("#{household_token}.temperature_sum") { temperature_records.sum.to_s }
+    allow(Rails.configuration.redis).to receive(:get).with("#{household_token}.temperature_min") { temperature_records.min.to_s }
+    allow(Rails.configuration.redis).to receive(:get).with("#{household_token}.temperature_max") { temperature_records.max.to_s }
 
-    allow($redis).to receive(:get).with("#{household_token}.humidity_sum") { humidity_records.sum.to_s }
-    allow($redis).to receive(:get).with("#{household_token}.humidity_min") { humidity_records.min.to_s }
-    allow($redis).to receive(:get).with("#{household_token}.humidity_max") { humidity_records.max.to_s }
+    allow(Rails.configuration.redis).to receive(:get).with("#{household_token}.humidity_sum") { humidity_records.sum.to_s }
+    allow(Rails.configuration.redis).to receive(:get).with("#{household_token}.humidity_min") { humidity_records.min.to_s }
+    allow(Rails.configuration.redis).to receive(:get).with("#{household_token}.humidity_max") { humidity_records.max.to_s }
 
-    allow($redis).to receive(:get).with("#{household_token}.battery_charge_sum") { battery_charge_records.sum.to_s }
-    allow($redis).to receive(:get).with("#{household_token}.battery_charge_min") { battery_charge_records.min.to_s }
-    allow($redis).to receive(:get).with("#{household_token}.battery_charge_max") { battery_charge_records.max.to_s }
+    allow(Rails.configuration.redis).to receive(:get).with("#{household_token}.battery_charge_sum") { battery_charge_records.sum.to_s }
+    allow(Rails.configuration.redis).to receive(:get).with("#{household_token}.battery_charge_min") { battery_charge_records.min.to_s }
+    allow(Rails.configuration.redis).to receive(:get).with("#{household_token}.battery_charge_max") { battery_charge_records.max.to_s }
   end
 
   let(:temperature_records) { [25.4, 27.0, 24.4] }

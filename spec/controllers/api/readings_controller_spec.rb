@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Api::ReadingsController do
@@ -13,7 +15,8 @@ RSpec.describe Api::ReadingsController do
     it 'executes create command' do
       expect(Readings::Create).to receive(:run)
 
-      post :create, params: { temperature: "30.1", humidity: "30.0", battery_charge: "40.0", household_token: 'test_token' }
+      post :create,
+           params: { temperature: '30.1', humidity: '30.0', battery_charge: '40.0', household_token: 'test_token' }
     end
   end
 

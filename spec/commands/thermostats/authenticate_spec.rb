@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Thermostats::Authenticate do
@@ -8,7 +10,7 @@ RSpec.describe Thermostats::Authenticate do
 
   context 'when household_token is in redis' do
     before do
-      allow($redis).to receive(:get).with(household_token) { true }
+      allow(Rails.configuration.redis).to receive(:get).with(household_token) { true }
     end
 
     it 'is successful' do
@@ -20,7 +22,7 @@ RSpec.describe Thermostats::Authenticate do
     let!(:thermostat) { create(:thermostat, household_token: household_token) }
 
     before do
-      allow($redis).to receive(:get).with(household_token) { nil }
+      allow(Rails.configuration.redis).to receive(:get).with(household_token) { nil }
     end
 
     it 'is successful' do
@@ -34,7 +36,7 @@ RSpec.describe Thermostats::Authenticate do
     end
 
     it 'saves household_token in redis' do
-      expect($redis).to receive(:set).with(household_token, true)
+      expect(Rails.configuration.redis).to receive(:set).with(household_token, true)
 
       subject
     end
@@ -42,7 +44,7 @@ RSpec.describe Thermostats::Authenticate do
 
   context 'when thermostat can not be found at all' do
     before do
-      allow($redis).to receive(:get).with(household_token) { nil }
+      allow(Rails.configuration.redis).to receive(:get).with(household_token) { nil }
     end
 
     it 'is unsuccessful' do

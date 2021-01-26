@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Readings::Find do
@@ -11,21 +13,21 @@ RSpec.describe Readings::Find do
   end
 
   before do
-    allow($redis).to receive(:get).with("#{thermostat.household_token}.count") { "2" }
-    allow($redis).to receive(:get).with(thermostat.household_token) { json_reading }
+    allow(Rails.configuration.redis).to receive(:get).with("#{thermostat.household_token}.count") { '2' }
+    allow(Rails.configuration.redis).to receive(:get).with(thermostat.household_token) { json_reading }
   end
 
-  let(:json_reading) { reading_2.attributes.slice('temperature', 'humidity', 'battery_charge').to_json }
+  let(:json_reading) { reading2.attributes.slice('temperature', 'humidity', 'battery_charge').to_json }
 
   let(:thermostat) { create(:thermostat) }
-  let!(:reading_1) { create(:reading, thermostat: thermostat, number: 1) }
-  let!(:reading_2) { create(:reading, thermostat: thermostat, number: 2) }
+  let!(:reading1) { create(:reading, thermostat: thermostat, number: 1) }
+  let!(:reading2) { create(:reading, thermostat: thermostat, number: 2) }
 
   context 'when the requested reading is stored in redis' do
     let(:number) { 2 }
 
     it 'uses redis to fetch it' do
-      expect($redis).to receive(:get).with(thermostat.household_token)
+      expect(Rails.configuration.redis).to receive(:get).with(thermostat.household_token)
 
       subject
     end
