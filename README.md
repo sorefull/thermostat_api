@@ -50,3 +50,11 @@ curl -XGET 'http://127.0.0.1:3000/api/readings/stats?household_token=dummy_token
 ### Testing
 
 To run tests you will only need to execute `docker-compose up test`
+
+### Room for improvement
+
+Since this project is just a code challenge it does not solve all issues. Before using it in the production this issues should be taken care of:
+
+- assuming unreliability of `redis`, taking care of `count` desynchronisation
+- authentication for `sidekicq`
+- add number validation for `reading`
